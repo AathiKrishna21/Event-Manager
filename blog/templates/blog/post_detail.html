@@ -16,6 +16,10 @@
         <h2 class="article-title">{{ object.title }}</h2>
         <p class="article-content">{{ object.content }}</p>
         <img class="tum" src="{{ object.image.url }}" alt="" width="250" height="250">
+        <a class="btn btn-outline-info" href="{%  url 'post-register' object.id %}">Register</a>
+        {% if user.is_superuser %}
+            <a class="btn btn-outline-success" href="{{object.register_file.url}}">Download</a>
+        {% endif %}
 
         
         </div>
