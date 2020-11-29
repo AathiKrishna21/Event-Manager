@@ -1,9 +1,18 @@
-body {
+/* body {
     background: #fafafa;
     color: #333333;
     margin-top: 5rem;
-  }
-  
+  } */
+  body {
+    background: #70caee;
+    color: #333333;
+    margin-top: 5rem;
+    background-image: url(eve.jpg);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+
+  } 
 
   .tum {
     border: 1px solid #ddd;
@@ -24,7 +33,7 @@ body {
   }
   
   .bg-steel {
-    background-color: #5f788a;
+    background-color: #925ba8;
   }
   
   .site-header .navbar-nav .nav-link {

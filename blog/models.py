@@ -17,7 +17,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to="thumbnail") 
     register_file = models.FileField(blank=True, upload_to='List')
-    etime = models.DateTimeField()
+    etime = models.DateTimeField(verbose_name='Event Date and Time')
 
 
     def delete(self):
@@ -29,7 +29,7 @@ class Post(models.Model):
     def save(self):
         f_name= self.event
         f_name=f_name + ".csv"
-        self.register_file.save(f_name, ContentFile("Name,Reg No,E-Mail,Phone No,Deptartment,Event"),save=False)
+        self.register_file.save(f_name, ContentFile("Name,Reg No,E-Mail,Phone No,Deptartment,Event" + "\n"),save=False)
         super().save()
         img = Image.open(self.image.path)
 

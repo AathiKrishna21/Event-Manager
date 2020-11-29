@@ -41,6 +41,7 @@ class PostDetailView(LoginRequiredMixin,DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['event', 'content', 'image','etime']
+    
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -49,6 +50,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['event', 'content','image','etime']
+    
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -76,6 +78,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def register(request, pk):
     if request.method == "POST":
         obj=Post.objects.get(id=pk)
+        
         form = PostRegisterForm(request.POST)
         if form.is_valid():
             request.user.myevents.u_event.add(obj)
