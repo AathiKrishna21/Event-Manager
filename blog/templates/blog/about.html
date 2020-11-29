@@ -1,4 +1,11 @@
 {% extends 'blog\base.html' %}
 {% block content %}
-<h1>Blog About</h1>
+{% for e in events.all %}
+    <article class="media content-section">
+        <!-- <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" alt=""> -->
+        <div class="media-body">
+        <p>{{e.event}}</p>
+        </div>
+    </article>
+{% endfor %}
 {% endblock content %}

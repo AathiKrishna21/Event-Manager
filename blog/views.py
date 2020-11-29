@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Post
 from .forms import PostRegisterForm
+from users.models import Myevents
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
@@ -37,9 +38,9 @@ class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
 
 
-class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content', 'image']
+    fields = ['event', 'content', 'image','etime']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -47,7 +48,7 @@ class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content','image']
+    fields = ['event', 'content','image','etime']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -77,6 +78,7 @@ def register(request, pk):
         obj=Post.objects.get(id=pk)
         form = PostRegisterForm(request.POST)
         if form.is_valid():
+            request.user.myevents.u_event.add(obj)
             t=[]
             name = form.cleaned_data.get('name')
             t.append(name)
@@ -88,8 +90,8 @@ def register(request, pk):
             t.append(phone)
             dept = form.cleaned_data.get('dept')
             t.append(dept)
-            event=obj.title
-            t.append(event)
+            event_n=obj.event
+            t.append(event_n)
             f_name=obj.register_file.path
             with open(f_name, 'a',newline='') as f:
                 writer=csv.writer(f)
@@ -110,4 +112,7 @@ def register(request, pk):
                   context={"form":form}) 
 @login_required
 def about(request):
-    return render(request, 'blog/about.html', {'title': 'About'})
+    context ={
+        'events' : request.user.myevents.u_event
+    }
+    return render(request, 'blog/about.html', context)
