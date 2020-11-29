@@ -29,7 +29,7 @@ class Post(models.Model):
     def save(self):
         f_name= self.event
         f_name=f_name + ".csv"
-        self.register_file.save(f_name, ContentFile(""),save=False)
+        self.register_file.save(f_name, ContentFile("Name,Reg No,E-Mail,Phone No,Deptartment,Event"),save=False)
         super().save()
         img = Image.open(self.image.path)
 
